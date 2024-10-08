@@ -4,6 +4,6 @@ Aplicación de web scraping que te permite encontrar productos y precios en lín
 
 **Tecnologías usadas:**
 - **Frontend:** Vue.js + Tailwind CSS
-- **Servidor:** Express.js con Puppeteer para el web scraping
+- **Backend:** Express.js con Puppeteer para el web scraping
 
 **Estado del proyecto:** En desarrollo
