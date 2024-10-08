@@ -7,10 +7,10 @@ export const ProductService = {
     async searchProducts(product) {
         try {
             const response = await axios.get(`${API_URL}/${product}`);
-            return response.data; // Asume que la respuesta es un array de productos
+            return response.data;
         } catch (error) {
             console.error('Error fetching products:', error);
-            throw error; // Re-lanza el error para manejarlo en el componente
+            throw error;
         }
     },
 };
