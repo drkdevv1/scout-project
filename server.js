@@ -25,7 +25,7 @@ app.get('/api/search/:query', async (req, res) => {
         // Navega a Wong
         const wongPage = await browser.newPage();
         await wongPage.goto(`https://www.wong.pe/${searchQuery}?_q=${searchQuery}&map=ft`, { waitUntil: 'networkidle2' });
-        await wongPage.waitForSelector('.vtex-product-summary-2-x-container', { timeout: 11000 });
+        await wongPage.waitForSelector('.vtex-product-summary-2-x-container', { timeout: 10000 });
 
         // Simula el desplazamiento para cargar más productos en Wong
         await wongPage.evaluate(async () => {
@@ -63,7 +63,6 @@ app.get('/api/search/:query', async (req, res) => {
             return productsArray;
         });
 
-        // Limitar a 10 productos de Plaza Vea
         allProducts.push(...plazaVeaProducts.slice(0, 10));
 
         // Extrae los productos de Wong
@@ -74,12 +73,10 @@ app.get('/api/search/:query', async (req, res) => {
             productElements.forEach(product => {
                 const name = product.querySelector('.vtex-product-summary-2-x-productNameContainer')?.textContent.trim() || 'No disponible';
 
-                // Extraer el precio como cadena
-                const currencyInteger = product.querySelector('.vtex-product-price-1-x-currencyInteger')?.textContent.trim() || '0';
-                const currencyDecimal = product.querySelector('.vtex-product-price-1-x-currencyFraction')?.textContent.trim() || '0';
-                const priceString = (currencyInteger !== '0' || currencyDecimal !== '0') ? `S/ ${currencyInteger}.${currencyDecimal}` : 'No disponible';
+                // Extraer el precio completo desde el contenedor de precio
+                const priceString = product.querySelector('.vtex-product-price-1-x-currencyContainer.vtex-product-price-1-x-currencyContainer--product-online-price')?.textContent.trim() || 'No disponible';
 
-                const imageUrl = product.querySelector('img')?.getAttribute('src') || 'Sin imagen';
+                const imageUrl = product.querySelector('.vtex-product-summary-2-x-imageNormal.vtex-product-summary-2-x-image')?.getAttribute('src') || 'Sin imagen';
                 const link = product.querySelector('a')?.href || 'Sin enlace';
 
                 productsArray.push({ name, seller: "Wong", price: priceString, imageUrl, link });
@@ -88,12 +85,11 @@ app.get('/api/search/:query', async (req, res) => {
             return productsArray;
         });
 
-        // Limitar a 10 productos de Wong
+
         allProducts.push(...wongProducts.slice(0, 10));
 
         await browser.close();
 
-        // Enviar productos tal como se extrajeron
         res.json(allProducts);
     } catch (error) {
         console.error('Error fetching products:', error);
