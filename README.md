@@ -1,9 +1,9 @@
-# Project Scout
+# Scout
 
-Aplicación de web scraping que te ayuda a encontrar productos y precios en línea de tiendas como Plaza Vea y Wong. Solo escribe lo que buscas y obtendrás una lista con imágenes y precios.
+Aplicación de web scraping que te permite encontrar productos y precios en línea de tiendas como Plaza Vea, Wong, etc.
 
 **Tecnologías usadas:**
-- **Frontend:** Vue.js
+- **Frontend:** Vue.js + Tailwind CSS
 - **Servidor:** Express.js con Puppeteer para el web scraping
 
-**Estado:** En desarrollo
+**Estado del proyecto:** En desarrollo
