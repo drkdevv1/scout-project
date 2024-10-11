@@ -166,19 +166,25 @@ app.get('/api/search/:query', async (req, res) => {
 
 
 
-        // Cargar productos de todas las páginas en paralelo
+        // **Recuperar productos y combinarlos**
         const [wongProducts, plazaVeaProducts, tottusProducts] = await Promise.all([
             fetchWongProducts(),
             fetchPlazaVeaProducts(),
             fetchTottusProducts()
         ]);
 
-        // Combinar productos
         allProducts.push(...wongProducts, ...plazaVeaProducts, ...tottusProducts);
         await browser.close();
 
-        // Almacenar resultados en caché
+        // **Almacenar productos en caché**
         cache[searchQuery] = allProducts;
+
+        // **Ordenar productos por precio antes de la paginación**
+        allProducts.sort((a, b) => {
+            const priceA = parseFloat(a.price.replace(/[^0-9.-]+/g, ""));
+            const priceB = parseFloat(b.price.replace(/[^0-9.-]+/g, ""));
+            return priceA - priceB;
+        });
 
         // Calcular el total de páginas
         const totalPages = Math.ceil(allProducts.length / limit);
