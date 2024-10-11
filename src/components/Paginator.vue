@@ -75,13 +75,4 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Color personalizado para el cuadrado de la página seleccionada */
-.bg-[#df0775] {
-  background-color: #df0775;
-}
-
-/* Color personalizado para el contenedor principal */
-.bg-[#e7e6e8] {
-  background-color: #e7e6e8;
-}
 </style>
