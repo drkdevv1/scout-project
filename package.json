@@ -15,7 +15,9 @@
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.0",
+    "node-cache": "^5.1.2",
     "puppeteer": "^23.5.0",
+    "puppeteer-cluster": "^0.24.0",
     "vue": "^3.4.29"
   },
   "devDependencies": {
