@@ -25,25 +25,11 @@ export default {
     async fetchProducts(searchQuery, page = 1) {
       this.isLoading = true;
       this.message = '';
-      this.products = []; // Reiniciar productos antes de la carga
+      this.products = [];
 
       try {
         const data = await ProductService.searchProducts(searchQuery, page);
-        const fetchedProducts = data.products;
-
-        // Ordenar los productos por precio
-        fetchedProducts.sort((a, b) => {
-          const priceA = parseFloat(a.price.replace(/[^0-9.-]+/g, "")); // Convertir a número
-          const priceB = parseFloat(b.price.replace(/[^0-9.-]+/g, ""));
-          return priceA - priceB;
-        });
-
-        // Mostrar los productos uno por uno
-        for (const product of fetchedProducts) {
-          this.products.push(product);
-          await new Promise(resolve => setTimeout(resolve, 100)); // Esperar un poco antes de mostrar el siguiente producto
-        }
-
+        this.products = data.products; // Asigna los productos directamente
         this.currentPage = data.currentPage;
         this.totalPages = data.totalPages;
 
