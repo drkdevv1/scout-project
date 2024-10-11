@@ -1,7 +1,7 @@
 // src/services/ProductService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/search';
+const API_URL = 'https://web-production-a1a1.up.railway.app/api/search';
 
 export const ProductService = {
     async searchProducts(product, page = 1, limit = 20) {
